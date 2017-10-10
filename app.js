@@ -19,7 +19,6 @@ var app = {
 			if($(this).hasClass('active')){
 				return;
 			}
-			base = 0;
 			data = [];
 			$(this).addClass('active').siblings().removeClass('active');
 			that.render($(this).data('week'));
