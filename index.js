@@ -61,4 +61,4 @@ function getCount(){
 
 
 getCount();
-// setInterval(getCount, 72e5);
+setInterval(getCount, 72e5);
