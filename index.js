@@ -25,13 +25,16 @@ var year = new Date().getFullYear(),
 
 function getCount(){
 	https.get(url, function(res){
-		var json;
+		var bufs = [];
 		res.on('data', function(data){
-			json = data;
+			bufs.push(data);
 		})
 		res.on('end', function(){
-			json = JSON.parse(json);
-			var allCnt = json.wareDetailComment.allCnt;
+			var buf = Buffer.concat(bufs);
+
+			buf = JSON.parse(buf);
+
+			var allCnt = buf.wareDetailComment.allCnt;
 
 			if(!db[weekNumber]){
 				db[weekNumber] = [
@@ -45,7 +48,7 @@ function getCount(){
 				];
 			}
 			db[weekNumber][day][Math.floor(hour / 2)] = allCnt;
-			fs.writeFile(__dirname + '/db.js', new Buffer(JSON.stringify(db)), {}, function(err, res){
+			fs.writeFile(__dirname + '/db.js', JSON.stringify(db), {}, function(err, res){
 				if(err) {
 					console.error(err);
 				} else {
@@ -58,4 +61,4 @@ function getCount(){
 
 
 getCount();
-setInterval(getCount, 72e5);
+// setInterval(getCount, 72e5);
