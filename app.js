@@ -1,7 +1,6 @@
 var myChart = echarts.init(document.getElementById('charts'));
 var db,
 	data,
-	base = 0,
 	year = new Date().getFullYear(),
 	month = new Date().getMonth() + 1,
 	date = new Date().getDate(),
@@ -27,17 +26,15 @@ var app = {
 		});
 	},
 	getDiff: function(weekNo){
-		data = $.extend(true, [], db[weekNo])
-
-		for(var i = 0; i < data.length; i++){
-			for(var j = 0; j < data[i].length; j++){
+		data = $.extend(true, [], db[weekNo]);
+		var first = false;
+		for(var i = data.length-1; i >= 0; i--){
+			for(var j = data[i].length-1; j >= 0; j--){
 				if(data[i][j] > 0){
-					if(base == 0){
-						base = data[i][j];
-						data[i][j] = data[i][j] - base;
-					} else{
-						data[i][j] = data[i][j] - base - data[i][j-1];
-					}
+					data[i][j] = data[i][j] - db[weekNo][i][j-1];
+				}
+				if(data[i][j-1] == 0){
+					data[i][j] = 0;
 				}
 			}
 		}
