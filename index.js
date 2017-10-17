@@ -76,5 +76,5 @@ var j = schedule.scheduleJob(rule, function(){
 	getCount();
 })
 
-// getCount();
+getCount();
 // setInterval(getCount, 72e5);
