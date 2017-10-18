@@ -28,8 +28,6 @@ var getWeekNumber = require('./week');
 var year = new Date().getFullYear(),
 	month = new Date().getMonth() + 1,
 	date = new Date().getDate(),
-	day = new Date().getDay() ? (new Date().getDay() - 1) : 6,
-	
 	weekNumber = '' + year + getWeekNumber(year, month, date);
 
 function getCount(){
@@ -58,6 +56,7 @@ function getCount(){
 			}
 			
 			var hour = new Date().getHours();
+			var day = new Date().getDay() ? (new Date().getDay() - 1) : 6;
 			console.log(hour)
 			db[weekNumber][day][Math.floor(hour / 2)] = allCnt;
 			fs.writeFile(__dirname + '/db.js', JSON.stringify(db), {}, function(err, res){
