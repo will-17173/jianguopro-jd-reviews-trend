@@ -26,17 +26,41 @@ var app = {
 	},
 	getDiff: function(weekNo){
 		data = $.extend(true, [], db[weekNo]);
-		var first = false;
+		
 		for(var i = data.length-1; i >= 0; i--){
 			for(var j = data[i].length-1; j >= 0; j--){
+
+				//大于0的数据才要处理
 				if(data[i][j] > 0){
+
+					// 如果前一个数据是0(即整个项目刚开始时采集的第一个数据), 这个时段评价数置为0
+					if(data[i][j-1] == 0){
+						data[i][j] = 0;
+						continue;
+					}
+
+					// 除周一外每天的第一个数据, 需要它减去前一天的最后一个数据
+					if(i > 0 && j == 0 && data[i-1][11] > 0){
+						data[i][j] = data[i][j] - db[weekNo][i-1][11];
+						continue;
+					}
+
+					// 周一的第一个数据, 把它减去上一周的最后一个数据
+					if(i == 0 && j == 0){
+						if($.isArray(db[weekNo-1]) && db[weekNo-1][6][11] > 0){
+							data[i][j] = db[weekNo-1][6][11]
+						} else{
+							data[i][j] = 0;
+						}
+						continue;
+					}
+
+					// 时段评价数 = 该时段数据 - 上时段数据
 					data[i][j] = data[i][j] - db[weekNo][i][j-1];
-				}
-				if(data[i][j-1] == 0){
-					data[i][j] = 0;
 				}
 			}
 		}
+		console.log(data)
 	},
 	render: function(weekNo){
 		this.getDiff(weekNo);
