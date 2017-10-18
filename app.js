@@ -60,7 +60,6 @@ var app = {
 				}
 			}
 		}
-		console.log(data)
 	},
 	render: function(weekNo){
 		this.getDiff(weekNo);
@@ -79,7 +78,13 @@ var app = {
 		for(var key in db){
 			$('<a href="javascript:;" class="list-group-item" data-week="' + key + '">' + key.substr(0,4) + '年' + key.substr(4,5) + '周</a>').appendTo('.list-group');
 		}
-		$('.list-group-item').eq(0).addClass('active');		
+
+		$('.list-group-item').each(function(){
+			var weekNo = $(this).attr('data-week');
+			if(weekNo == currentWeekNumber){
+				$(this).addClass('active');
+			}
+		})
 	}
 }
 
