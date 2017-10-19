@@ -1,4 +1,5 @@
 var option = {
+    color: ['#3398DB'],
 	title: {
 		text: '2017年第42周'
 	},

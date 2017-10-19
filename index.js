@@ -5,8 +5,8 @@ var path = require('path');
 var schedule = require('node-schedule');
 
 var rule = new schedule.RecurrenceRule();
-var hours = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22];
-var min = 0;
+var hours = [1, 3, 5, 7, 8, 11, 13, 15, 17, 19, 21, 23];
+var min = 59;
 // var sec = [1, 6, 11, 16, 21, 26, 31, 36, 41, 46, 51, 56];
 rule.hour = hours;
 rule.minute = min;
