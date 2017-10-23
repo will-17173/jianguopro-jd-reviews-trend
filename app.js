@@ -12,7 +12,6 @@ var app = {
 		this.bindEvent();
 		this.renderTab();
 		this.render(currentWeekNumber);
-		this.showTotalReviewCount();
 	},
 	bindEvent: function(){
 		var that = this;
@@ -96,9 +95,6 @@ var app = {
 				$(this).addClass('active');
 			}
 		})
-	},
-	showTotalReviewCount: function(){
-
 	}
 }
 
