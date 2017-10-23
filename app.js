@@ -12,6 +12,7 @@ var app = {
 		this.bindEvent();
 		this.renderTab();
 		this.render(currentWeekNumber);
+		this.showTotalReviewCount();
 	},
 	bindEvent: function(){
 		var that = this;
@@ -26,12 +27,20 @@ var app = {
 	},
 	getDiff: function(weekNo){
 		data = $.extend(true, [], db[weekNo]);
+
+		var mark = false;
 		
 		for(var i = data.length-1; i >= 0; i--){
 			for(var j = data[i].length-1; j >= 0; j--){
 
 				//大于0的数据才要处理
 				if(data[i][j] > 0){
+
+					// 如果是最后一个数据（最新采集的）
+					if(!mark){
+						$('.col-12 p span').text(data[i][j]);
+						mark = true;
+					}
 
 					// 如果前一个数据是0(即整个项目刚开始时采集的第一个数据), 这个时段评价数置为0
 					if(data[i][j-1] == 0){
@@ -58,6 +67,8 @@ var app = {
 					// 时段评价数 = 该时段数据 - 上时段数据
 					data[i][j] = data[i][j] - db[weekNo][i][j-1];
 				}
+
+
 			}
 		}
 	},
@@ -85,6 +96,9 @@ var app = {
 				$(this).addClass('active');
 			}
 		})
+	},
+	showTotalReviewCount: function(){
+
 	}
 }
 
