@@ -6,11 +6,9 @@ var schedule = require('node-schedule');
 
 var rule = new schedule.RecurrenceRule();
 var hours = [1, 3, 5, 7, 8, 11, 13, 15, 17, 19, 21, 23];
-var min = 59;
-// var sec = [1, 6, 11, 16, 21, 26, 31, 36, 41, 46, 51, 56];
+var min = [55,57,59]; //取三次以防一次不成功
 rule.hour = hours;
 rule.minute = min;
-// rule.second = sec;
 
 var db = {};
 
@@ -25,11 +23,6 @@ fs.readFile(__dirname + '/db.js', {flag: 'r+'}, function(err, res){
 
 var getWeekNumber = require('./week');
 
-var year = new Date().getFullYear(),
-	month = new Date().getMonth() + 1,
-	date = new Date().getDate(),
-	weekNumber = '' + year + getWeekNumber(year, month, date);
-
 function getCount(){
 	https.get(url, function(res){
 		var bufs = [];
@@ -37,6 +30,12 @@ function getCount(){
 			bufs.push(data);
 		})
 		res.on('end', function(){
+
+			var year = new Date().getFullYear(),
+				month = new Date().getMonth() + 1,
+				date = new Date().getDate(),
+				weekNumber = '' + year + getWeekNumber(year, month, date);
+
 			var buf = Buffer.concat(bufs);
 
 			buf = JSON.parse(buf);

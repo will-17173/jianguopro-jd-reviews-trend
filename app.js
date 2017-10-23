@@ -48,7 +48,7 @@ var app = {
 					// 周一的第一个数据, 把它减去上一周的最后一个数据
 					if(i == 0 && j == 0){
 						if($.isArray(db[weekNo-1]) && db[weekNo-1][6][11] > 0){
-							data[i][j] = db[weekNo-1][6][11]
+							data[i][j] = data[i][j] - db[weekNo-1][6][11]
 						} else{
 							data[i][j] = 0;
 						}
